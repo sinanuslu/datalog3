@@ -42,7 +42,7 @@ function getKeys($searchKey)
 
 function getModalData($result, $filters = [], $etiket = [])
 {
-    
+
     $outputMeta = '';
     $outputSoru = '';
     $outputDokuman = '';
@@ -50,9 +50,15 @@ function getModalData($result, $filters = [], $etiket = [])
     if (!empty($result)) {
         foreach ($result as $value) {
             // Farklı bölümlerden gelen filtre değerleri sağlanıyorsa çalışacak
-
-                $outputMeta .= $value['meta_veri'];
-
+            $highlightedMetaVeri = highlightKeywords($value, "meta_veri", $etiket, "#329bdb");
+            $outputMeta .= '<div class="pb-1 border-bottom">
+            <span class="badge rounded-pill bg-danger me-1" style="font-size:0.5rem;">'
+            . $highlightedMetaVeri['count'] . '</span>'
+            . implode("", $highlightedMetaVeri['tags'])
+            . '</div>
+            <div>' 
+            . $highlightedMetaVeri['highlightedText'][$value['calisma_id']][0]
+            . '</div>';
         }
     } else {
         $outputMeta = '<h4>İlgili Kriterleri İçeren Çalışma Bulunamadı!</h4>';

@@ -289,7 +289,7 @@ require_once "tarih.php";
                     <h5 class="modal-title" id="modalMetodolojiLabel">METODOLOJİ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="metodoloji" style="font-size: 0.75rem; overflow-x:hidden;">
+                <div class="modal-body pt-1" id="metodoloji" style="font-size: 0.75rem; overflow-x:hidden;">
 
                 </div>
             </div>
