@@ -40,15 +40,15 @@ function searchDizi($searchKey, $id = "calisma_id")
         //Anahtar kelimenin geçtiği tüm çalışmaları bulmak için hazırlanacak ANA SORGUda kullanılacak TABLO SORGUları
         $queryMeta = "SELECT $id FROM meta WHERE " . implode(" OR ", $queryKeyMeta) . " COLLATE utf8mb4_turkish_ci";
         $querySoru = "SELECT $id FROM meta_soru2 WHERE " . implode(" OR ", $queryKeySoru) . " COLLATE utf8mb4_turkish_ci"  . " OR " . implode(" OR ", $queryKeyCevap) . " COLLATE utf8mb4_turkish_ci";
-        $queryCevap = "SELECT $id FROM meta_soru2 WHERE " . implode(" OR ", $queryKeyCevap) . " COLLATE utf8mb4_turkish_ci";
+        
 
         //Tüm tablolarda arama sonucunda çıkan çalışmaları bulmak için kullanılacak ANA SORGU
-        $queryMain = "SELECT * FROM meta WHERE $id IN ($queryMeta" . " UNION " . $querySoru . " UNION " . $queryCevap . ")";
+        $queryMain = "SELECT * FROM meta WHERE $id IN ($queryMeta" . " UNION " . $querySoru . ")";
 
         //ANA SORGUdan gelecek tabloya SORU ve CEVAP anahtarlarının eklenmesinde kullanılacak sorgular ve
         $queryMeta = "SELECT * FROM meta WHERE " . implode(" OR ", $queryKeyMeta) . " COLLATE utf8mb4_turkish_ci";
         $querySoru = "SELECT * FROM meta_soru2 WHERE " . implode(" OR ", $queryKeySoru) . " COLLATE utf8mb4_turkish_ci" . " OR " . implode(" OR ", $queryKeyCevap) . " COLLATE utf8mb4_turkish_ci";
-        $queryCevap = "SELECT * FROM meta_soru2 WHERE " . implode(" OR ", $queryKeyCevap) . " COLLATE utf8mb4_turkish_ci";
+        
     } else {
         $parametre = [];
 
@@ -56,15 +56,13 @@ function searchDizi($searchKey, $id = "calisma_id")
         $queryMain = "SELECT * FROM meta";
 
         //ANA SORGUdan gelecek tabloya SORU ve CEVAP anahtarlarının eklenmesinde kullanılacak sorgular ve
-        $queryMeta = "SELECT * FROM meta";
+        
         $querySoru = "SELECT * FROM meta_soru2";
-        $queryCevap = "SELECT * FROM meta_soru2";
     }
 
-    $contentMeta = executeQuery($queryMeta, $parametre);
+    
     $contentSoru = executeQuery($querySoru, array_merge($parametre, $parametre));
-    $contentCevap = executeQuery($queryCevap, $parametre);
-    $contentMain = executeQuery($queryMain, array_merge($parametre, $parametre, $parametre, $parametre));
+    $contentMain = executeQuery($queryMain, array_merge($parametre, $parametre, $parametre));
 
     if (!empty($contentMain)) {
         foreach ($contentMain as $keyMain => &$valueMain) {
@@ -158,6 +156,30 @@ function highlightKeywords($arrValue, $col, $keywords, $highlightColor = "yellow
      */
 }
 
+function getTags($arrValue, $col, $keywords)
+{
+    $output = [];  // Anahtar kelimeler için oluşturulan etiketleri saklamak için bir dizi
+
+    $id = $arrValue['calisma_id']; // Her metnin benzersiz ID'sini al
+
+    if (!is_array($arrValue[$col])) {
+        $arrValue[$col] = [$arrValue[$col]];
+    }
+    foreach ($arrValue[$col] as $key => $value) { // Metin sütunundaki her bir öğeyi kontrol et
+        $text = $value; // Orijinal metni al
+
+        foreach ($keywords as $keyword) { // Anahtar kelimeler üzerinde dolaş
+            $sanitizedKeyword = htmlspecialchars($keyword, ENT_QUOTES, 'UTF-8'); // Anahtar kelimeyi de güvenli hale getir
+            // Anahtar kelimenin orijinal metinde geçtiğini kontrol et
+            if (mb_stripos(trChar($text), trChar($sanitizedKeyword), 0, 'UTF-8') !== false) {
+                // Anahtar kelime için bir etiket oluştur ve listeye ekle
+                $output[] = '<span class="scroll-item badge bg-secondary py-1 me-1">' . $sanitizedKeyword . '</span>';
+            }
+        }
+    }
+    // Vurgulanmış metinler, etiketler ve toplam anahtar kelime sayısını döndür
+    return ['tags' => $output];
+}
 
 function getDocs($calisma_id)
 {

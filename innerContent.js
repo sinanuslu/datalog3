@@ -105,7 +105,7 @@ $(document).ready(function () {
             calisma = calisma.concat($(this).val(), ',');
         });
 
-        $('.value').each(function() {
+        $('.value').each(function () {
             tarih = tarih.concat($(this).text(), ',');
         });
 
@@ -135,6 +135,26 @@ $(document).ready(function () {
         });
     });
 
+    // Dinamik butonlara tıklama olayı bağla (Olay Delegasyonu)
+    $(document).on('click', '.open-modal', function () {
+        const id = $(this).data('id'); // Butonun data-id'sini al
+        var action = 'modalContent';
+        searchKey = $('#search-input').val(); // Yeni searchKey'i arama kutusundan al
+
+        $.ajax({
+            url: "baglanti/modalContent.php",
+            method: "POST",
+            data: { action: action, searchKey: searchKey, filters: JSON.stringify(currentFilters), id: id }, // Filtreler ve searchKey'i gönder
+            success: function (response) {
+                let data = JSON.parse(response); // JSON formatında veri döndürecek
+                // inner-content div'ine gelen veriyi yerleştir
+                $('#metodoloji').html(data.innerContent);
+                
+            }
+        });
+
+
+    });
 
 
 });

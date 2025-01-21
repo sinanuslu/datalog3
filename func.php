@@ -24,8 +24,13 @@ function executeQuery($query, $parametre = [])
 }
 
 //ANAHTAR KELİMEYİ TÜM TABLOLARDA BULUP BİRLEŞTİRME
-function searchDizi($searchKey, $id = "calisma_id")
+function searchDizi($searchKey, $calisma_id = '', $uniqe_id_column = "calisma_id")
 {
+    if ($calisma_id != '') {
+        $calisma_id = " WHERE calisma_id=" . $calisma_id;
+    } else {
+        $calisma_id = " WHERE 1=1 ";
+    }
 
     foreach ($searchKey as $key) {
         if ($key != '') {
@@ -38,26 +43,26 @@ function searchDizi($searchKey, $id = "calisma_id")
 
     if (!empty($searchKey)) {
         //Anahtar kelimenin geçtiği tüm çalışmaları bulmak için hazırlanacak ANA SORGUda kullanılacak TABLO SORGUları
-        $queryMeta = "SELECT $id FROM meta WHERE " . implode(" OR ", $queryKeyMeta) . " COLLATE utf8mb4_turkish_ci";
-        $querySoru = "SELECT $id FROM meta_soru2 WHERE " . implode(" OR ", $queryKeySoru) . " COLLATE utf8mb4_turkish_ci"  . " OR " . implode(" OR ", $queryKeyCevap) . " COLLATE utf8mb4_turkish_ci";
+        $queryMeta = "SELECT $uniqe_id_column FROM meta " . $calisma_id . " AND (" . implode(" OR ", $queryKeyMeta) . " COLLATE utf8mb4_turkish_ci" . ")";
+        $querySoru = "SELECT $uniqe_id_column FROM meta_soru2 " . $calisma_id . " AND (" . implode(" OR ", $queryKeySoru) . " COLLATE utf8mb4_turkish_ci"  . " OR " . implode(" OR ", $queryKeyCevap) . " COLLATE utf8mb4_turkish_ci" . ")";
         
 
         //Tüm tablolarda arama sonucunda çıkan çalışmaları bulmak için kullanılacak ANA SORGU
-        $queryMain = "SELECT * FROM meta WHERE $id IN ($queryMeta" . " UNION " . $querySoru . ")";
+        $queryMain = "SELECT * FROM meta WHERE $uniqe_id_column IN ($queryMeta" . " UNION " . $querySoru . ")";
 
         //ANA SORGUdan gelecek tabloya SORU ve CEVAP anahtarlarının eklenmesinde kullanılacak sorgular ve
-        $queryMeta = "SELECT * FROM meta WHERE " . implode(" OR ", $queryKeyMeta) . " COLLATE utf8mb4_turkish_ci";
-        $querySoru = "SELECT * FROM meta_soru2 WHERE " . implode(" OR ", $queryKeySoru) . " COLLATE utf8mb4_turkish_ci" . " OR " . implode(" OR ", $queryKeyCevap) . " COLLATE utf8mb4_turkish_ci";
+        $queryMeta = "SELECT * FROM meta " . $calisma_id . " AND (" . implode(" OR ", $queryKeyMeta) . " COLLATE utf8mb4_turkish_ci" . ")";
+        $querySoru = "SELECT * FROM meta_soru2 " . $calisma_id . " AND (" . implode(" OR ", $queryKeySoru) . " COLLATE utf8mb4_turkish_ci" . " OR " . implode(" OR ", $queryKeyCevap) . " COLLATE utf8mb4_turkish_ci" . ")";
         
     } else {
         $parametre = [];
 
         //Tüm tablolarda arama sonucunda çıkan çalışmaları bulmak için kullanılacak ANA SORGU
-        $queryMain = "SELECT * FROM meta";
+        $queryMain = "SELECT * FROM meta" . $calisma_id;
 
         //ANA SORGUdan gelecek tabloya SORU ve CEVAP anahtarlarının eklenmesinde kullanılacak sorgular ve
         
-        $querySoru = "SELECT * FROM meta_soru2";
+        $querySoru = "SELECT * FROM meta_soru2" . $calisma_id;
     }
 
     
@@ -69,7 +74,7 @@ function searchDizi($searchKey, $id = "calisma_id")
             $valueMain['soru'] = []; //Arama kelimelerini içeren SORULARI ilgili çalışmaya array olarak eklemek için
             $valueMain['cevap'] = []; //Arama kelimelerini içeren CEVAPLARI ilgili çalışmaya array olarak eklemek için
             foreach ($contentSoru as $keySoru => $valueSoru) {
-                if ($valueMain[$id] == $valueSoru[$id]) {
+                if ($valueMain[$uniqe_id_column] == $valueSoru[$uniqe_id_column]) {
                     $valueMain['soru'][$valueSoru['soru_id2']] = trChar($valueSoru['soru']);
                     $valueMain['cevap'][$valueSoru['soru_id2']] = trChar($valueSoru['cevap']);
                 }
