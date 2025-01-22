@@ -1,0 +1,62 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Anamakine: 127.0.0.1
+-- Üretim Zamanı: 06 Kas 2024, 11:49:37
+-- Sunucu sürümü: 10.4.32-MariaDB
+-- PHP Sürümü: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Veritabanı: `datalog`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `meta`
+--
+
+CREATE TABLE `meta` (
+  `calisma_id` int(10) UNSIGNED NOT NULL,
+  `calisma` varchar(255) NOT NULL,
+  `tablolar` varchar(255) NOT NULL,
+  `kategori` varchar(255) NOT NULL,
+  `kaynak` varchar(255) NOT NULL,
+  `olcek` varchar(255) NOT NULL,
+  `meta_veri` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Tablo döküm verisi `meta`
+--
+
+INSERT INTO `meta` (`calisma_id`, `calisma`, `tablolar`, `kategori`, `kaynak`, `olcek`, `meta_veri`) VALUES
+(1, 'Sosyal Doku Araştırması', 'sosyal_doku_hane,sosyal_doku_kisi,sosyal_doku_hane_soru,sosyal_doku_kisi_soru', 'Sosyal,Demografi', 'İPA', 'İstanbul,İlçe,Mahalle', 'Kentte yaşayan nüfusun tamamına ya da spesifik bir örneklem grubuna, hanelerde/bulundukları yerlerde görüşmek suretiyle anketle ulaşılarak daha iyi hizmet vermek, sosyal yapının belirlenmesi, verilecek hizmetin detaylarına ulaşılması, şehrin geleceğine yön verilmesi ve gerçek ihtiyaç sahiplerinin tespit edilmesi gibi amaçlarıyla yapılabilen araştırma çalışmalarıdır.\n\nSosyal doku araştırmalarında hane halkı, sokak ve mahalle bazında yapılan değerlendirmelerle götürülecek hizmetin kalitesi arttırılarak, gereksiz yatırım ve harcamalardan kaçınılması amaçlanır.'),
+(2, 'Veriye Dayalı Yönetim Modeli', 'vdym_b,vdym_c,vdym_soru', 'Demografi,Ekonomi', 'İPA,TÜİK', 'İstanbul,İlçe', 'İstanbul’da Veriye Dayalı Yönetim Modeli araştırması ile İstanbul halkının genel sosyodemografik ve sosyoekonomik profilinin, ihtiyaç ve eğilimlerinin belirlenerek yatırım ve hizmetler konusunda oluşturulacak stratejilere altlık olacak veri üretilmesi hedeflenmiştir. Bu amaçla kent genelinde 50.000 hane ile yüz yüze anket yöntemi kullanılarak görüşme gerçekleştirilmiştir. Anket sayısı her mahalleye en az 12 anket düşecek şekilde mahalle hane sayıları oranında dağıtılmıştır. Çalışma sonuçlarının İstanbul’u temsil edebilmesi için görüşme gerçekleştirilecek haneler, mahalle düzeyinde tabakalı rastgele örneklem yöntemi ile seçilmiştir.\n\nÇalıştaylar ve toplantılar ile nihai hali belirlenen anket formunun uygulandığı saha çalışması 29.11.2021 – 07.03.2022 tarihleri arasında gerçekleştirilmiştir.'),
+(3, 'Yaşam Kalitesi Araştırması', 'yasam_kalitesi,yasam_kalitesi_soru', 'Yaşam Kalitesi,Ekonomi', 'TCMB', 'Türkiye', 'Bu çalışma ilki 2011 yılında ikincisi 2016 yılında yayınlanan İstanbul’da 39 ilçeyi karşılaştıran yaşam kalitesi endeksinin güncel verilerle yenilendiği ve geçmiş yıllarla karşılaştırmaların yapıldığı bir araştırmadır. Periyodik olarak yapılan araştırmanın sonuçları İstanbul’daki ilçelerin yaşam kalitesi açısından dönüşümünü ortaya koymaktadır. Aynı yöntem ve parametreler üzerinden gerçekleştirilen çalışma yıllar itibariyle İstanbul’da ilçeler düzeyinde yaşam kalitesinin izlenmesini hedeflemektedir. İstanbul’da ilçe düzeyinde 2020 verileri ile yapılan analizde ağırlıklandırılmış ortalama yöntemi kullanılmıştır. Endeks sonuçlarına göre Kadıköy, Beşiktaş, Bakırköy, Üsküdar ve Şişli yaşam kalitesinin en yüksek olduğu ilçeler iken, Gaziosmanpaşa, Esenler, Sultanbeyli, Sultangazi ve Arnavutköy ilçeleri sıralamada sonlarda yer almıştır. Yapılan kümeleme çalışması sonucunda 5 küme açısından değerlendirildiğinde, İstanbul nüfusunun yüzde 4,8’inin en yüksek yaşam kalitesi olan birinci düzeyde yaşadığı gözlenirken, %15,9’u ikinci, %31,5’i üçüncü, %36,2’si dördüncü ve %11,6’sı beşinci düzeyde yaşam kalitesine sahip ilçelerde bulunmaktadır. ');
+
+--
+-- Dökümü yapılmış tablolar için indeksler
+--
+
+--
+-- Tablo için indeksler `meta`
+--
+ALTER TABLE `meta`
+  ADD PRIMARY KEY (`calisma_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

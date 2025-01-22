@@ -138,23 +138,40 @@ $(document).ready(function () {
     // Dinamik butonlara tıklama olayı bağla (Olay Delegasyonu)
     $(document).on('click', '.open-modal', function () {
         const id = $(this).data('id'); // Butonun data-id'sini al
+        const modal = $(this).data('bs-target'); // data-bs-target özelliğini alır
         var action = 'modalContent';
-        searchKey = $('#search-input').val(); // Yeni searchKey'i arama kutusundan al
 
         $.ajax({
             url: "baglanti/modalContent.php",
             method: "POST",
-            data: { action: action, searchKey: searchKey, filters: JSON.stringify(currentFilters), id: id }, // Filtreler ve searchKey'i gönder
+            data: { action: action, searchKey: searchKey, filters: JSON.stringify(currentFilters), id: id, modal: modal }, // Filtreler ve searchKey'i gönder
             success: function (response) {
                 let data = JSON.parse(response); // JSON formatında veri döndürecek
                 // inner-content div'ine gelen veriyi yerleştir
-                $('#metodoloji').html(data.innerContent);
+                $('#metodoloji').html(data.innerContent.meta);
+                $('#sorular').html(data.innerContent.soru);
                 
             }
         });
-
-
     });
+
+        // Dinamik butonlara tıklama olayı bağla (Olay Delegasyonu)
+        $(document).on('click', '.doc-modal', function () {
+            const id = $(this).data('id'); // Butonun data-id'sini al
+            var action = 'docContent';
+    
+            $.ajax({
+                url: "baglanti/modalContent.php",
+                method: "POST",
+                data: { action: action, id: id }, // Filtreler ve searchKey'i gönder
+                success: function (response) {
+                    let data = JSON.parse(response); // JSON formatında veri döndürecek
+                    // inner-content div'ine gelen veriyi yerleştir
+                    $('#dokuman').html(data.docs);
+                    
+                }
+            });
+        });
 
 
 });

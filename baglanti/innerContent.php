@@ -63,24 +63,6 @@ if (isset($_POST['action'])) {
         echo json_encode(array('innerContent' => $innerContent, 'anahtarSearch' => $anahtarSearch, 'keyWords' => $searchKey));
     }
 
-    if ($_POST['action'] == 'modalContent') {
-        $searchKey = !empty(trim($_POST['searchKey']))
-            ? preg_split('/\s+(?![^(]*\))/', trim($_POST['searchKey']))
-            : [];
-
-        // Parantezleri kaldır
-        $searchKey = array_map(function ($item) {
-            return trim($item, '()');
-        }, $searchKey);
-
-        // Boş değerleri filtrele
-        $searchKey = array_filter($searchKey);
-        $filters = isset($_POST['filters']) ? json_decode($_POST['filters'], true) : [];
-        $result = searchDizi($searchKey, $_POST['id']);
-        $innerContent = getModalData($result, $filters, $searchKey);
-        $anahtarSearch = getKeys($searchKey);
-        echo json_encode(array('innerContent' => $innerContent, 'anahtarSearch' => $anahtarSearch, 'keyWords' => $searchKey));
-    }
 }
 
 function getData($result, $filters = [], $etiket = [])
@@ -218,7 +200,7 @@ function getData($result, $filters = [], $etiket = [])
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.5rem;">
                             ' . (count($value['soru']) > 0 ? count($value['soru']) : '#') . '</span>
                         </a>
-                        <a href="#" class="open-modal btn btn-sm btn-flash-border-primary" data-bs-toggle="modal" data-bs-target="#modalCevaplar" data-id="' . htmlspecialchars($value["calisma_id"]) . '">DÖKÜMAN</a>
+                        <a href="#" class="doc-modal btn btn-sm btn-flash-border-primary" data-bs-toggle="modal" data-bs-target="#modalCevaplar" data-id="' . htmlspecialchars($value["calisma_id"]) . '">DÖKÜMAN</a>
                     </div>
                 </div>
 
@@ -266,25 +248,4 @@ function matchesFilterDate($value, $filterArray, $field)
         return true;
     }
     return false;
-}
-
-function getModalData($result, $filters = [], $etiket = [])
-{
-    
-    $outputMeta = '';
-    $outputSoru = '';
-    $outputDokuman = '';
-
-    if (!empty($result)) {
-        foreach ($result as $value) {
-            // Farklı bölümlerden gelen filtre değerleri sağlanıyorsa çalışacak
-
-                $outputMeta .= $value['meta_veri'];
-
-        }
-    } else {
-        $outputMeta = '<h4>İlgili Kriterleri İçeren Çalışma Bulunamadı!</h4>';
-    }
-
-    return $outputMeta;
 }
