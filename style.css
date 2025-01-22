@@ -1,0 +1,276 @@
+.bi {
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
+
+.keys {
+  display: flex;
+}
+
+.scroll-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  /* Flexbox ile yan yana dizim */
+  overflow-x: hidden;
+  /* Yatay kaydırma */
+  white-space: nowrap;
+  /* Öğelerin yan yana dizilmesini sağlar */
+  padding-bottom: 5px;
+}
+
+.scroll-container:hover {
+  overflow-x: auto;
+  padding-bottom: 1px;
+  /* Yatay kaydırma */
+}
+
+.scroll-item {
+  flex: 0 0 auto;
+  /* Her bir öğenin minimum genişliği */
+  margin-right: 10px;
+  /* Öğeler arasında boşluk */
+}
+
+/* Scrollbar boyutlarını ayarlama */
+::-webkit-scrollbar {
+  width: 12px; /* Dikey scrollbar genişliği */
+  height: 12px; /* Yatay scrollbar yüksekliği */
+}
+
+/* Scrollbar arka planını (track) stilize etme */
+::-webkit-scrollbar-track {
+  background: #edf8fc; /* Arka plan rengi */
+  border-radius: 10px; /* Köşeleri yuvarlama */
+}
+
+/* Scrollbar "thumb" kısmını stilize etme (kayan parça) */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Renk */
+  border-radius: 10px; /* Köşeleri yuvarlama */
+  border: 3px solid #f1f1f1; /* Arka planla birleştirme için ince bir çerçeve */
+}
+
+/* Scrollbar thumb üzerine gelindiğinde renk değişimi */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Hover durumunda renk değişimi */
+}
+
+
+.accordion-button:focus {
+  box-shadow: none;
+  border-color: rgba(0, 0, 0, 0.125);
+  background-color: transparent;
+}
+
+.acord.collapsed>span::after {
+  content: url("icon/arrow-bar-down.svg");
+}
+
+.acord:not(.collapsed)>span::after {
+  content: url("icon/arrow-bar-up.svg");
+}
+
+.trunc {
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 2;
+  /* En fazla 2 satır göster */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  /* Çok satırlı olması için */
+}
+
+#FiltreTemizle:not(:active) {
+  color: #dc3545;
+  background-color: #fff;
+  border-color: #dc3545;
+}
+
+#FiltreUygula:active {
+  color: #0b5ed7;
+  background-color: #fff;
+  border-color: #0b5ed7;
+}
+
+#FiltreUygula:not(:active) {
+  color: #fff;
+  background-color: #0b5ed7;
+  border-color: #fff;
+}
+
+#search-buton:active {
+  color: #198754;
+  background-color: #fff;
+  border-color: #198754;
+}
+
+#clear-buton:active {
+  color: #dc3545;
+  background-color: #fff;
+  border-color: #dc3545;
+}
+
+#content {
+  height: calc(100vh - 174px);
+  /*box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;*/
+}
+
+.kategori:checked,
+#TumKategori:checked {
+  background-color: #0275d8;
+  border-color: #0275d8;
+}
+
+.kaynak:checked,
+#TumKaynak:checked {
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+}
+
+.olcek:checked,
+#TumOlcek:checked {
+  background-color: #5bc0de;
+  border-color: #5bc0de;
+}
+
+.calisma:checked,
+#TumCalisma:checked {
+  background-color: #d9534f;
+  border-color: #d9534f;
+}
+
+.kategori-color:not(:focus) {
+  background-color: #0274d834;
+}
+
+.kaynak-color:not(:focus) {
+  background-color: #5cb85c36;
+}
+
+.olcek-color:not(:focus) {
+  background-color: #5bc0de2d;
+}
+
+.calisma-color:not(:focus) {
+  background-color: #d9544f2a;
+}
+
+/*
+.accordion-button:not(.collapsed)::after {
+  background-color: #d2153d;
+  transform: rotate(360deg);
+  }
+
+  .accordion-button.collapsed::after {
+  background-image: url("/img/Home/FAQ/arrow-down.png");
+  }
+*/
+.accordionSecondButton:not(.collapsed) {
+  background-color: #d9544f2a;
+}
+
+.accordionSecondButton.collapsed {
+  background-color: #71a8bd;
+}
+
+/* Hücrede taşan metinler için */
+table td {
+  white-space: nowrap; /* Metni tek satırda tutar */
+  overflow: visible;    /* Taşan içeriği gizler */
+  text-overflow: ellipsis; /* Taşan metni üç nokta ile gösterir */
+  max-width: 150px;    /* Hücre genişliği için maksimum bir sınır koyabilirsiniz */
+  position: relative;  /* Tooltip için gerekli */
+}
+
+.tips {
+  display:none;
+}
+
+table td:hover .tips {
+  display: block;
+  position: absolute;
+  top: 10%; /* Hücrenin altına yerleştirir */
+  left: 10%;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid red;
+  padding: 5px;
+  border-radius: 4px;
+  white-space: normal; /* Tooltip metninin alt satıra geçmesini sağlar */
+  font-size: 0.75rem;
+  z-index: 9999999999999; /* Tooltip'in üstte görünmesini sağlar */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  max-width: 75%; /* Genişlik aşılmamalıdır */
+  word-wrap: break-word; /* Taşan kelimeler alt satıra geçer */
+  white-space: normal; /* Metnin alt satırlara geçmesine izin verir */
+  overflow: auto;
+}
+
+.widget-49-title-wrapper {
+  display: flex;
+  align-items: center;
+}
+.widget-49-title-wrapper .widget-49-date-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #e8faf8;
+
+  border-radius: 10%;
+}
+.widget-49-title-wrapper .widget-49-date-success .widget-49-date-day {
+  color: #1780d1;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.widget-49-title-wrapper .widget-49-date-success .widget-49-date-month {
+  color: #1780d1;
+  line-height: 1;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.widget-49-title-wrapper .widget-49-meeting-info {
+  display: flex;
+  flex-direction: column;
+
+}
+.widget-49-title-wrapper .widget-49-meeting-info .widget-49-pro-title {
+  color: #3c4142;
+  font-size: 14px;
+}
+
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%; /* Input'un altına yerleştir */
+  left: 0;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  visibility: hidden; /* Varsayılan olarak gizli */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+  z-index: 100000000;
+}
+
+.tooltip-container input:focus + .tooltip,
+.tooltip-container input:hover + .tooltip {
+  visibility: visible; /* Görünür yap */
+  opacity: 1; /* Şeffaflığı kaldır */
+}
