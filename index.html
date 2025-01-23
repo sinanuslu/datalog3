@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATALOG Site Tasarımı</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar, .card-header {
+            background-color: #e60000; /* Kırmızı */
+        }
+
+        .btn-primary {
+            background-color: #e60000;
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: #111;
+            border: none;
+        }
+
+        .accordion-button {
+            background-color: #111;
+            color: white;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #e60000;
+        }
+
+        .card-body {
+            background-color: #222;
+        }
+
+        /* Sol Üst ve Sağ Üst Sabit */
+        .navbar, .search-container {
+            position: fixed;
+            z-index: 1000;
+            width: 100%;
+            top: 0;
+        }
+
+        .navbar {
+            top: 0;
+            left: 0;
+            padding: 15px;
+            background-color: #e60000;
+        }
+
+        .search-container {
+            top: 60px; /* Navbar'ın hemen altına yerleştirildi */
+            padding: 15px;
+            background-color: #111;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-container input {
+            width: 50%;
+        }
+
+        .main-container {
+            display: flex;
+            margin-top: 120px; /* Sol üst sabit navbar'ın hemen altına yerleştirildi */
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        /* Sol Kısım */
+        .left-column {
+            position: sticky;
+            top: 80px; /* Sabit navbar'ın hemen altında yer alacak */
+            width: 25%;
+        }
+
+        /* Sağ Kısım (Kartlar) */
+        .right-column {
+            width: 75%;
+            overflow-y: auto;
+            max-height: calc(100vh - 120px); /* Sağ kısım kaydırılabilir olmalı */
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 15px;
+        }
+
+        .card {
+            width: 30%;
+            margin-bottom: 15px;
+            background-color: #333;
+            color: white;
+        }
+
+        /* Responsive Kartlar */
+        @media (max-width: 768px) {
+            .card {
+                width: 48%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card {
+                width: 100%;
+            }
+        }
+
+        /* Menü ve Butonlar */
+        .accordion-button {
+            background-color: #111;
+            color: white;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #e60000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Kısım -->
+    <div class="navbar">
+        <h1 class="text-white">DATALOG</h1>
+    </div>
+
+    <div class="search-container">
+        <!-- Arama Çubuğu ve Butonlar -->
+        <input type="text" class="form-control" placeholder="Ara...">
+        <button class="btn btn-primary">Arama</button>
+        <button class="btn btn-secondary">Sil</button>
+    </div>
+
+    <!-- Ana İçerik -->
+    <div class="main-container">
+        <!-- Sol Kısım (Accordion Menüler) -->
+        <div class="left-column">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="accordion-button" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Kategori Kaynak
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <ul>
+                                <li>Alt Kategori 1</li>
+                                <li>Alt Kategori 2</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="accordion-button" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Ölçek
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <ul>
+                                <li>Alt Ölçek 1</li>
+                                <li>Alt Ölçek 2</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="accordion-button" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Çalışmalar
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <ul>
+                                <li>Çalışma 1</li>
+                                <li>Çalışma 2</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary w-100 mt-3">Filtrele</button>
+            <button class="btn btn-secondary w-100 mt-2">Temizle</button>
+        </div>
+
+        <!-- Sağ Kısım (Kartlar) -->
+        <div class="right-column">
+            <div class="card-container">
+                <div class="card">
+                    <img src="path/to/image1.jpg" class="card-img-top" alt="Card image">
+                    <div class="card-body">
+                        <h5 class="card-title">Kart 1</h5>
+                        <p class="card-text">Bu bir kart örneğidir.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="path/to/image2.jpg" class="card-img-top" alt="Card image">
+                    <div class="card-body">
+                        <h5 class="card-title">Kart 2</h5>
+                        <p class="card-text">Bu bir kart örneğidir.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="path/to/image3.jpg" class="card-img-top" alt="Card image">
+                    <div class="card-body">
+                        <h5 class="card-title">Kart 3</h5>
+                        <p class="card-text">Bu bir kart örneğidir.</p>
+                    </div>
+                </div>
+                <!-- Daha fazla kart ekleyebilirsiniz -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
