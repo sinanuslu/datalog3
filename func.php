@@ -132,6 +132,7 @@ function highlightKeywords($arrValue, $col, $keywords, $highlightColor = "yellow
             if (mb_stripos(trChar($text), trChar($sanitizedKeyword), 0, 'UTF-8') !== false) {
                 // Anahtar kelime için bir etiket oluştur ve listeye ekle
                 $output[] = '<span class="scroll-item badge bg-secondary py-1 me-1">' . $sanitizedKeyword . '</span>';
+                $processedText = '<span style="background-color:#dc3545; margin-left:-5px;">&nbsp;&nbsp;</span>' . $processedText;
             }
         }
         $highlightedArr[$key] = $processedText; // Vurgulanmış metni geçici diziye ekle
